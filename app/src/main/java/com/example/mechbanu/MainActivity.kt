@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import androidx.core.app.ActivityCompat
@@ -22,8 +23,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this, BluetoothConnectService::class.java)
-        startService(intent)
+        if (BluetoothConnectService.instance == null) {
+            val intent = Intent(this, BluetoothConnectService::class.java)
+            startService(intent)
+        }
+        else {
+            val intent = Intent(this, BluetoothConnectService::class.java)
+            startService(intent)
+        }
 
         val button: ImageButton = findViewById(R.id.microphone)
         button.setColorFilter(Color.WHITE)

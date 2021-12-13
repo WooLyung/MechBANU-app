@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import com.example.mechbanu.bluetooth.Bluetooth
+import java.lang.Exception
 
 class BluetoothConnectService : Service() {
     companion object {
@@ -21,8 +22,10 @@ class BluetoothConnectService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (instance != null)
+        if (instance != null) {
+            bluetooth?.connect()
             return START_NOT_STICKY
+        }
 
         bluetooth = Bluetooth(applicationContext)
         instance = this
@@ -46,21 +49,16 @@ class BluetoothConnectService : Service() {
         }
 
         Thread {
-            var f = true
             while (true) {
-                Log.i("BANUBANU", "${bluetooth?.isConnected}")
+                try {
+                    Log.i("BANUBANU", "${bluetooth?.isConnected}")
+                    Thread.sleep(5000)
+                } catch (e: Exception) {
 
-                if (f) {
-                    bluetooth?.write("불 켜\n".toByteArray())
                 }
-                else {
-                    bluetooth?.write("불 꺼\n".toByteArray())
-                }
-                f = !f
-
-                Thread.sleep(5000)
             }
         }.start()
+
         return START_STICKY
     }
 

@@ -1,11 +1,9 @@
 package com.example.mechbanu.bluetooth
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
-import android.bluetooth.BluetoothSocket
+import android.bluetooth.*
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import java.lang.Exception
 import java.util.*
@@ -30,6 +28,7 @@ class Bluetooth(val context: Context) {
 
     fun disconnect() {
         thread?.close()
+        thread?.socket?.close()
     }
 
     fun connect() {
@@ -58,7 +57,7 @@ class Bluetooth(val context: Context) {
                     Toast.makeText(context, "블루투스에 연결하였습니다.", Toast.LENGTH_LONG).show()
                 }
                 catch (e: Exception) {
-                    Toast.makeText(context, "블루투스를 연결하는 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "${e.message}", Toast.LENGTH_LONG).show()
                     e.printStackTrace()
                 }
             }
