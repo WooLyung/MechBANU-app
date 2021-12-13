@@ -51,7 +51,7 @@ class BluetoothConnectService : Service() {
         Thread {
             while (true) {
                 try {
-                    Log.i("BANUBANU", "${bluetooth?.isConnected}")
+                    // Log.i("BANUBANU", "${bluetooth?.isConnected}")
                     Thread.sleep(5000)
                 } catch (e: Exception) {
 

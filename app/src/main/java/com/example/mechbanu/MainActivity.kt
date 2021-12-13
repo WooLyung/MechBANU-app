@@ -48,9 +48,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onEndOfSpeech() = Unit
 
-            override fun onError(p0: Int) = Unit
+            override fun onError(p0: Int) {
+                button.setColorFilter(Color.WHITE)
+            }
 
             override fun onResults(results: Bundle) {
+                button.setColorFilter(Color.WHITE)
+
                 val matches: ArrayList<String> = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!!
                 var txt = ""
 
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                     txt += str
                 }
 
-                // bluetooth?.write((txt + "\n").toByteArray())
+                BluetoothConnectService?.instance?.bluetooth?.write((txt + "\n").toByteArray())
             }
 
             override fun onPartialResults(p0: Bundle?) = Unit
@@ -73,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 try {
+                    button.setColorFilter(Color.CYAN)
                     recognizer?.startListening(sttIntent)
                 }
                 catch (e: Exception) {
