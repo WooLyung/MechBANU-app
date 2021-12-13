@@ -3,14 +3,15 @@
     package="com.example.mechbanu">
 
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <queries>
         <intent>
-            <action android:name="android.speech.RecognitionService"/>
+            <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
 
@@ -21,6 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MechBANU">
+        <service
+            android:name=".BluetoothConnectService"
+            android:enabled="true"
+            android:exported="true"></service>
         <activity
             android:name=".MainActivity"
             android:exported="true">

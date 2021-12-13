@@ -3,6 +3,7 @@ package com.example.mechbanu.bluetooth
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.os.SystemClock
+import android.util.Log
 import android.widget.Toast
 import java.io.InputStream
 import java.io.OutputStream
@@ -12,6 +13,9 @@ class BluetoothThread(val socket: BluetoothSocket, val context: Context) : Threa
     private val inStream: InputStream?
     private val outStream: OutputStream?
 
+    val isConnected: Boolean
+        get() = socket.isConnected
+
     override fun run() {
         val buffer = ByteArray(1024)
         var bytes: Int
@@ -19,7 +23,7 @@ class BluetoothThread(val socket: BluetoothSocket, val context: Context) : Threa
         if (inStream == null || outStream == null)
             return
 
-        while (true) {
+        while (isConnected) {
             try {
                 bytes = inStream.available()
                 if (bytes != 0) {
@@ -38,6 +42,14 @@ class BluetoothThread(val socket: BluetoothSocket, val context: Context) : Threa
             outStream?.write(bytes)
         } catch (e: Exception) {
             Toast.makeText(context, "데이터 전송 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun close() {
+        try {
+            socket.close()
+        } catch (e: Exception) {
+            Toast.makeText(context, "소켓 해제 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show()
         }
     }
 

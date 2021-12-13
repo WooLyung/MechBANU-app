@@ -15,8 +15,8 @@ class Bluetooth(val context: Context) {
     private var bluetoothAdapter: BluetoothAdapter? = null
     private var thread: BluetoothThread? = null
 
-    var isConnected = false
-        private set
+    val isConnected: Boolean
+        get() = thread?.isConnected ?: false
 
     init {
         bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -26,6 +26,10 @@ class Bluetooth(val context: Context) {
 
     fun write(bytes: ByteArray) {
         thread?.write(bytes)
+    }
+
+    fun disconnect() {
+        thread?.close()
     }
 
     fun connect() {
@@ -51,7 +55,7 @@ class Bluetooth(val context: Context) {
                     bluetoothSocket.connect()
                     thread = BluetoothThread(bluetoothSocket, context)
                     thread?.start()
-                    isConnected = true
+                    Toast.makeText(context, "블루투스에 연결하였습니다.", Toast.LENGTH_LONG).show()
                 }
                 catch (e: Exception) {
                     Toast.makeText(context, "블루투스를 연결하는 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show()
