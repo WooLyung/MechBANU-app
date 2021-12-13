@@ -33,10 +33,10 @@ class Bluetooth(val context: Context) {
 
     fun connect() {
         if (bluetoothAdapter == null) {
-            Toast.makeText(context, "블루투스를 사용할 수 없는 기기입니다.", Toast.LENGTH_LONG).show()
+            // Toast.makeText(context, "블루투스를 사용할 수 없는 기기입니다.", Toast.LENGTH_LONG).show()
         }
         else if (!bluetoothAdapter!!.isEnabled) {
-            Toast.makeText(context, "블루투스가 비활성화 상태입니다.", Toast.LENGTH_LONG).show()
+            // Toast.makeText(context, "블루투스가 비활성화 상태입니다.", Toast.LENGTH_LONG).show()
         }
         else {
             val listPairedDevices = bluetoothAdapter!!.bondedDevices
@@ -46,7 +46,7 @@ class Bluetooth(val context: Context) {
                     connectedDevice = it
             }
             if (connectedDevice == null) {
-                Toast.makeText(context, "메카 반우를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+                // Toast.makeText(context, "메카 반우를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
             }
             else {
                 try {
@@ -54,10 +54,10 @@ class Bluetooth(val context: Context) {
                     bluetoothSocket.connect()
                     thread = BluetoothThread(bluetoothSocket, context)
                     thread?.start()
-                    Toast.makeText(context, "블루투스에 연결하였습니다.", Toast.LENGTH_LONG).show()
+                    // Toast.makeText(context, "블루투스에 연결하였습니다.", Toast.LENGTH_LONG).show()
                 }
                 catch (e: Exception) {
-                    Toast.makeText(context, "${e.message}", Toast.LENGTH_LONG).show()
+                    // Toast.makeText(context, "${e.message}", Toast.LENGTH_LONG).show()
                     e.printStackTrace()
                 }
             }

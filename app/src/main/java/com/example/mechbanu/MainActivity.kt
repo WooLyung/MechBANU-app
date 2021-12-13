@@ -62,13 +62,12 @@ class MainActivity : AppCompatActivity() {
                     txt += str
                 }
 
-                BluetoothConnectService?.instance?.bluetooth?.write((txt + "\n").toByteArray())
+                BluetoothConnectService.instance?.bluetooth?.write((txt + "\n").toByteArray())
             }
 
             override fun onPartialResults(p0: Bundle?) = Unit
 
             override fun onEvent(p0: Int, p1: Bundle?) = Unit
-
         })
 
         button.setOnClickListener { view ->

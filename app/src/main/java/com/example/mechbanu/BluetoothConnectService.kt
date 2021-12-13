@@ -50,12 +50,20 @@ class BluetoothConnectService : Service() {
 
         Thread {
             while (true) {
-                try {
-                    // Log.i("BANUBANU", "${bluetooth?.isConnected}")
-                    Thread.sleep(5000)
-                } catch (e: Exception) {
-
+                if (bluetooth?.isConnected == false) {
+                    bluetooth?.connect()
                 }
+                else {
+                    try {
+                        bluetooth?.write("ping\n".toByteArray())
+                    } catch (e: Exception) {
+                        if (e.message == "Broken pipe") {
+                            bluetooth?.connect()
+                        }
+                    }
+                }
+
+                Thread.sleep(10000)
             }
         }.start()
 

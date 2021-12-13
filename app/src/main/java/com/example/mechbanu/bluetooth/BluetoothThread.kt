@@ -38,11 +38,7 @@ class BluetoothThread(val socket: BluetoothSocket, val context: Context) : Threa
     }
 
     fun write(bytes: ByteArray) {
-        try {
-            outStream?.write(bytes)
-        } catch (e: Exception) {
-            Toast.makeText(context, "데이터 전송 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show()
-        }
+        outStream?.write(bytes)
     }
 
     fun close() {
