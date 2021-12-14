@@ -32,6 +32,8 @@ class Bluetooth(val context: Context) {
     }
 
     fun connect() {
+        Log.i("BANUBANU", "connect")
+
         if (bluetoothAdapter == null) {
             // Toast.makeText(context, "블루투스를 사용할 수 없는 기기입니다.", Toast.LENGTH_LONG).show()
         }

@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MechBANU">
         <service
-            android:name=".BluetoothConnectService"
+            android:name=".bluetooth.BluetoothConnectService"
             android:enabled="true"
             android:exported="true"></service>
         <activity

@@ -1,4 +1,4 @@
-package com.example.mechbanu
+package com.example.mechbanu.bluetooth
 
 import android.app.*
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
@@ -6,7 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import com.example.mechbanu.bluetooth.Bluetooth
+import com.example.mechbanu.MainActivity
+import com.example.mechbanu.R
 import java.lang.Exception
 
 class BluetoothConnectService : Service() {
@@ -33,20 +34,18 @@ class BluetoothConnectService : Service() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_CANCEL_CURRENT)
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("banu_channel", "mechbanu", NotificationManager.IMPORTANCE_DEFAULT)
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+        val channel = NotificationChannel("banu_channel", "mechbanu", NotificationManager.IMPORTANCE_DEFAULT)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
 
-            val notification = Notification.Builder(applicationContext, "banu_channel")
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("MechBANU")
-                .setContentIntent(pendingIntent)
-                .setContentText("")
+        val notification = Notification.Builder(applicationContext, "banu_channel")
+            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setContentTitle("MechBANU")
+            .setContentIntent(pendingIntent)
+            .setContentText("")
 
-            notificationManager.notify(1, notification.build())
-            startForeground(1, notification.build())
-        }
+        notificationManager.notify(1, notification.build())
+        startForeground(1, notification.build())
 
         Thread {
             while (true) {
@@ -54,6 +53,7 @@ class BluetoothConnectService : Service() {
                     bluetooth?.connect()
                 }
                 else {
+                    Log.i("BANUBANU", "ping")
                     try {
                         bluetooth?.write("ping\n".toByteArray())
                     } catch (e: Exception) {
