@@ -27,18 +27,21 @@ class Bluetooth(val context: Context) {
     }
 
     fun disconnect() {
-        thread?.close()
-        thread?.socket?.close()
+        try {
+            thread?.socket?.close()
+            thread?.close()
+        }
+        catch (e: Exception)
+        {
+        }
     }
 
     fun connect() {
-        Log.i("BANUBANU", "connect")
-
         if (bluetoothAdapter == null) {
-            // Toast.makeText(context, "블루투스를 사용할 수 없는 기기입니다.", Toast.LENGTH_LONG).show()
+            BluetoothConnectService.instance?.notify(BluetoothConnectService.ConnectStatus.CANT)
         }
         else if (!bluetoothAdapter!!.isEnabled) {
-            // Toast.makeText(context, "블루투스가 비활성화 상태입니다.", Toast.LENGTH_LONG).show()
+            BluetoothConnectService.instance?.notify(BluetoothConnectService.ConnectStatus.DISABLE)
         }
         else {
             val listPairedDevices = bluetoothAdapter!!.bondedDevices
@@ -48,7 +51,7 @@ class Bluetooth(val context: Context) {
                     connectedDevice = it
             }
             if (connectedDevice == null) {
-                // Toast.makeText(context, "메카 반우를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+                BluetoothConnectService.instance?.notify(BluetoothConnectService.ConnectStatus.UNFOUND)
             }
             else {
                 try {
@@ -56,21 +59,16 @@ class Bluetooth(val context: Context) {
                     bluetoothSocket.connect()
                     thread = BluetoothThread(bluetoothSocket, context)
                     thread?.start()
-                    // Toast.makeText(context, "블루투스에 연결하였습니다.", Toast.LENGTH_LONG).show()
+                    BluetoothConnectService.instance?.notify(BluetoothConnectService.ConnectStatus.CONNECT)
                 }
                 catch (e: Exception) {
-                    // Toast.makeText(context, "${e.message}", Toast.LENGTH_LONG).show()
-                    e.printStackTrace()
+                    BluetoothConnectService.instance?.notify(BluetoothConnectService.ConnectStatus.FAIL)
                 }
             }
         }
     }
 
     private fun createBluetoothSocket(device: BluetoothDevice): BluetoothSocket {
-        val uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
-        if (Build.VERSION.SDK_INT >= 10) {
-            return device.createInsecureRfcommSocketToServiceRecord(uuid)
-        }
-        return device.createRfcommSocketToServiceRecord(uuid)
+        return device.createInsecureRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"))
     }
 }

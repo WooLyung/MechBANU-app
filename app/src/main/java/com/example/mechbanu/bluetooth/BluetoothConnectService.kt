@@ -9,6 +9,7 @@ import android.util.Log
 import com.example.mechbanu.MainActivity
 import com.example.mechbanu.R
 import java.lang.Exception
+import javax.net.ssl.SSLEngineResult
 
 class BluetoothConnectService : Service() {
     companion object {
@@ -16,7 +17,40 @@ class BluetoothConnectService : Service() {
             private set
     }
 
-    var bluetooth: Bluetooth? = null
+    enum class ConnectStatus {
+        NONE, CONNECT, FAIL, CANT, DISABLE, UNFOUND
+    }
+
+    private var bluetooth: Bluetooth? = null
+    private var notificationBuilder: Notification.Builder? = null
+    var status = ConnectStatus.NONE
+        private set
+
+    fun notify(status: ConnectStatus) {
+        when (status) {
+            ConnectStatus.CONNECT -> {
+                updateNotification("메카 반우와 연결되어 있습니다.")
+            }
+            ConnectStatus.FAIL -> {
+                updateNotification("메카 반우와 연결하는 데에 실패했습니다.")
+            }
+            ConnectStatus.CANT -> {
+                updateNotification("블루투스를 사용할 수 없는 기기입니다.")
+            }
+            ConnectStatus.DISABLE -> {
+                updateNotification("블루투스가 비활성화 상태입니다.")
+            }
+            ConnectStatus.UNFOUND -> {
+                updateNotification("메카 반우를 찾을 수 없습니다.")
+            }
+        }
+        this.status = status
+    }
+
+    private fun updateNotification(text: String) {
+        notificationBuilder?.setContentText(text)
+        startForeground(1, notificationBuilder!!.build())
+    }
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -34,18 +68,20 @@ class BluetoothConnectService : Service() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_CANCEL_CURRENT)
 
-        val channel = NotificationChannel("banu_channel", "mechbanu", NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel("banu_channel", "mechbanu", NotificationManager.IMPORTANCE_NONE)
+        channel.enableVibration(false)
+        channel.vibrationPattern = longArrayOf(0)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
 
-        val notification = Notification.Builder(applicationContext, "banu_channel")
+        notificationBuilder = Notification.Builder(applicationContext, "banu_channel")
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("MechBANU")
+            .setContentTitle("MechBANU Bluetooth")
             .setContentIntent(pendingIntent)
-            .setContentText("")
+            .setContentText("메카 반우를 찾고 있습니다.")
 
-        notificationManager.notify(1, notification.build())
-        startForeground(1, notification.build())
+        notificationManager.notify(1, notificationBuilder!!.build())
+        startForeground(1, notificationBuilder!!.build())
 
         Thread {
             while (true) {
@@ -53,9 +89,11 @@ class BluetoothConnectService : Service() {
                     bluetooth?.connect()
                 }
                 else {
-                    Log.i("BANUBANU", "ping")
                     try {
                         bluetooth?.write("ping\n".toByteArray())
+
+                        if (status != ConnectStatus.CONNECT)
+                            notify(ConnectStatus.CONNECT)
                     } catch (e: Exception) {
                         if (e.message == "Broken pipe") {
                             bluetooth?.connect()
@@ -72,5 +110,9 @@ class BluetoothConnectService : Service() {
 
     override fun onDestroy() {
         bluetooth?.disconnect()
+    }
+
+    fun write(bytes: ByteArray) {
+        bluetooth?.write(bytes)
     }
 }

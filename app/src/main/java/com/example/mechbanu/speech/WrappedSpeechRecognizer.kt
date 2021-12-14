@@ -10,7 +10,7 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import com.example.mechbanu.bluetooth.BluetoothConnectService
 
-class WrappedSpeechRecognizer(val context: Context) {
+class WrappedSpeechRecognizer(context: Context) {
     var sttIntent: Intent? = null
     var recognizer: SpeechRecognizer? = null
 
@@ -42,7 +42,7 @@ class WrappedSpeechRecognizer(val context: Context) {
                     txt += str
                 }
 
-                BluetoothConnectService.instance?.bluetooth?.write((txt + "\n").toByteArray())
+                BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
                 Log.i("BANUBANU", txt)
             }
 
