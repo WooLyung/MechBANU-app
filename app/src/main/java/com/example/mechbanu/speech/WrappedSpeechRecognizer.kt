@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.widget.Toast
 import com.example.mechbanu.bluetooth.BluetoothConnectService
+import java.lang.Exception
 
 class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = null) {
     var sttIntent: Intent? = null
@@ -32,6 +34,8 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
 
             override fun onError(p0: Int) {
                 listener?.let { it() }
+
+                Toast.makeText(context, "잘 알아듣지 못했어요.", Toast.LENGTH_LONG).show()
             }
 
             override fun onResults(results: Bundle) {
@@ -43,7 +47,12 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
                     txt += str
                 }
 
-                BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
+                try {
+                    BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
+                }
+                catch (e: Exception) {
+                    Toast.makeText(context, "블루투스 통신 중에 문제가 발생했어요.", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onPartialResults(p0: Bundle?) = Unit
