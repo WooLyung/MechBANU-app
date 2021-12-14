@@ -8,6 +8,9 @@ import android.os.IBinder
 import android.util.Log
 import com.example.mechbanu.MainActivity
 import com.example.mechbanu.R
+import com.example.mechbanu.packet.PacketReciever
+import com.example.mechbanu.packet.PacketSender
+import com.example.mechbanu.packet.instance.PingPacket
 import java.lang.Exception
 import javax.net.ssl.SSLEngineResult
 
@@ -23,6 +26,9 @@ class BluetoothConnectService : Service() {
 
     private var bluetooth: Bluetooth? = null
     private var notificationBuilder: Notification.Builder? = null
+    val sender = PacketSender(this)
+    val reciever = PacketReciever(this)
+
     var status = ConnectStatus.NONE
         private set
 
@@ -90,8 +96,7 @@ class BluetoothConnectService : Service() {
                 }
                 else {
                     try {
-                        bluetooth?.write("ping\n".toByteArray())
-
+                        sender.sendPacket(PingPacket())
                         if (status != ConnectStatus.CONNECT)
                             notify(ConnectStatus.CONNECT)
                     } catch (e: Exception) {

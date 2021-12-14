@@ -48,7 +48,9 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
                 }
 
                 try {
-                    BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
+                    //BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
+                    BluetoothConnectService.instance?.write(byteArrayOf('a'.toByte(), 'b'.toByte(), 'c'.toByte(), 'd'.toByte(),
+                    'd'.toByte(), 'e'.toByte(), 'f'.toByte(), 'g'.toByte()))
                 }
                 catch (e: Exception) {
                     Toast.makeText(context, "블루투스 통신 중에 문제가 발생했어요.", Toast.LENGTH_SHORT).show()
