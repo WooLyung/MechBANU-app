@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import android.widget.Toast
 import com.example.mechbanu.bluetooth.BluetoothConnectService
+import com.example.mechbanu.packet.instance.DisplayUpdatePacket
+import com.example.mechbanu.utils.sender
 import java.lang.Exception
 
 class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = null) {
@@ -48,9 +51,22 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
                 }
 
                 try {
-                    //BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
-                    BluetoothConnectService.instance?.write(byteArrayOf('a'.toByte(), 'b'.toByte(), 'c'.toByte(), 'd'.toByte(),
-                    'd'.toByte(), 'e'.toByte(), 'f'.toByte(), 'g'.toByte()))
+                    val packet = DisplayUpdatePacket()
+                    packet.draw( "" +
+                            "000000000000000000000000" +
+                            "000000000000000001000000" +
+                            "000010000000000010000000" +
+                            "000001000000000100000000" +
+                            "000000100000001000000100" +
+                            "000000010000000000000100" +
+                            "000000001000000000000100" +
+                            "000000000000000000000000"
+                    )
+
+                    packet.setColor(0, 255, 255)
+                    Log.i("BANUBANU", txt)
+
+                    sender?.sendPacket(packet)
                 }
                 catch (e: Exception) {
                     Toast.makeText(context, "블루투스 통신 중에 문제가 발생했어요.", Toast.LENGTH_SHORT).show()
