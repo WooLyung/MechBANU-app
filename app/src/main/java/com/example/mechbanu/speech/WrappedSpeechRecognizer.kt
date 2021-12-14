@@ -2,17 +2,19 @@ package com.example.mechbanu.speech
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.Log
 import com.example.mechbanu.bluetooth.BluetoothConnectService
 
-class WrappedSpeechRecognizer(context: Context) {
+class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = null) {
     var sttIntent: Intent? = null
     var recognizer: SpeechRecognizer? = null
+
+    fun setOnSpeechEndListener(listener: () -> Unit) {
+        this.listener = listener
+    }
 
     init {
         sttIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -29,21 +31,19 @@ class WrappedSpeechRecognizer(context: Context) {
             override fun onEndOfSpeech() = Unit
 
             override fun onError(p0: Int) {
-                // button.setColorFilter(Color.WHITE)
+                listener?.let { it() }
             }
 
             override fun onResults(results: Bundle) {
-                // button.setColorFilter(Color.WHITE)
+                listener?.let { it() }
 
                 val matches: ArrayList<String> = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!!
                 var txt = ""
-
                 matches.forEach { str ->
                     txt += str
                 }
 
                 BluetoothConnectService.instance?.write((txt + "\n").toByteArray())
-                Log.i("BANUBANU", txt)
             }
 
             override fun onPartialResults(p0: Bundle?) = Unit
