@@ -45,34 +45,12 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
                 listener?.let { it() }
 
                 val matches: ArrayList<String> = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!!
-                var txt = ""
+                var text = ""
                 matches.forEach { str ->
-                    txt += str
+                    text += str
                 }
 
-                try {
-                    val packet = DisplayUpdatePacket()
-                    packet.brightness = 20
-                    packet.draw( "" +
-                            "                        " +
-                            " 000    0   0   0 0   0 " +
-                            " 0  0  0 0  0   0 0   0 " +
-                            " 0  0  0 0  00  0 0   0 " +
-                            " 000  0   0 0 0 0 0   0 " +
-                            " 0  0 00000 0  00 0   0 " +
-                            " 0  0 0   0 0   0 0   0 " +
-                            " 0000 0   0 0   0  000  "
-                    )
-                    for (x in 0..23)
-                        for (y in 0..7)
-                            if (packet.getColorPixel(x, y) != DisplayUpdatePacket.black)
-                                packet.setColorPixel(x, y, x * 255 / 23, 50, y * 255 / 7)
-
-                    sender?.sendPacket(packet)
-                }
-                catch (e: Exception) {
-                    Toast.makeText(context, "블루투스 통신 중에 문제가 발생했어요.", Toast.LENGTH_SHORT).show()
-                }
+                sender?.classificate(text)
             }
 
             override fun onPartialResults(p0: Bundle?) = Unit
