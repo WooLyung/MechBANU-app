@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
+import com.example.mechbanu.utils.reciever
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.Exception
@@ -23,15 +24,15 @@ class BluetoothThread(val socket: BluetoothSocket, val context: Context) : Threa
         if (inStream == null || outStream == null)
             return
 
-        while (isConnected) {
+        while (true) {
             try {
                 bytes = inStream.available()
                 if (bytes != 0) {
-                    SystemClock.sleep(100)
-                    bytes = inStream.available()
-                    bytes = inStream.read(buffer, 0, bytes)
+                    inStream.read(buffer, 0, bytes)
+                    reciever?.readPacket(buffer)
                 }
             } catch (e: Exception) {
+                Log.i("BANUBANU", e.message!!)
                 break
             }
         }

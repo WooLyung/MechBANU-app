@@ -3,6 +3,14 @@ package com.example.mechbanu.packet.instance
 import com.example.mechbanu.packet.IPacket
 
 class DisplayUpdatePacket(var duration: Int = 1, var brightness: Int = 20) : IPacket {
+    companion object {
+        val black: Pixel
+            get() = Pixel(0, 0, 0)
+
+        val white: Pixel
+            get() = Pixel(255, 255, 255)
+    }
+
     data class Pixel(var r: Int = 0, var g: Int = 0, var b: Int = 0)
 
     val pixels: Array<Pixel> = (1..192).map { Pixel(0, 0, 0) }.toTypedArray()
@@ -36,7 +44,7 @@ class DisplayUpdatePacket(var duration: Int = 1, var brightness: Int = 20) : IPa
             val y = i / 24
             val offset = (7 - y) + x * 8
 
-            if (string[i] == '1')
+            if (string[i] == '0')
                 pixels[offset] = Pixel(255, 255, 255)
             else
                 pixels[offset] = Pixel(0, 0, 0)
@@ -47,5 +55,15 @@ class DisplayUpdatePacket(var duration: Int = 1, var brightness: Int = 20) : IPa
         for (i in 0..191)
             if (pixels[i] != Pixel(0, 0, 0))
                 pixels[i] = Pixel(r, g, b)
+    }
+
+    fun getColorPixel(x: Int, y: Int) : Pixel {
+        val i = x * 8 + y
+        return pixels[i]
+    }
+
+    fun setColorPixel(x: Int, y: Int, r: Int, g: Int, b: Int) {
+        val i = x * 8 + y
+        pixels[i] = Pixel(r, g, b)
     }
 }

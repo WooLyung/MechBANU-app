@@ -52,19 +52,21 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
 
                 try {
                     val packet = DisplayUpdatePacket()
+                    packet.brightness = 20
                     packet.draw( "" +
-                            "000000000000000000000000" +
-                            "000000000000000001000000" +
-                            "000010000000000010000000" +
-                            "000001000000000100000000" +
-                            "000000100000001000000100" +
-                            "000000010000000000000100" +
-                            "000000001000000000000100" +
-                            "000000000000000000000000"
+                            "                        " +
+                            " 000    0   0   0 0   0 " +
+                            " 0  0  0 0  0   0 0   0 " +
+                            " 0  0  0 0  00  0 0   0 " +
+                            " 000  0   0 0 0 0 0   0 " +
+                            " 0  0 00000 0  00 0   0 " +
+                            " 0  0 0   0 0   0 0   0 " +
+                            " 0000 0   0 0   0  000  "
                     )
-
-                    packet.setColor(0, 255, 255)
-                    Log.i("BANUBANU", txt)
+                    for (x in 0..23)
+                        for (y in 0..7)
+                            if (packet.getColorPixel(x, y) != DisplayUpdatePacket.black)
+                                packet.setColorPixel(x, y, x * 255 / 23, 50, y * 255 / 7)
 
                     sender?.sendPacket(packet)
                 }
