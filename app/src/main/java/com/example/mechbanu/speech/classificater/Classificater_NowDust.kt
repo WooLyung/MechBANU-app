@@ -6,12 +6,15 @@ import com.example.mechbanu.utils.sender
 
 class Classificater_NowDust : IClassificater {
     override val speechs = arrayListOf(
-        "지금먼지",
-        "지금먼지알려줘",
-        "지금먼지어때",
-        "지금뭔지",
-        "지금뭔지알려줘",
-        "지금뭔지어때"
+        "방먼지",
+        "방먼지알려줘",
+        "방먼지어때",
+        "실내먼지",
+        "실내먼지알려줘",
+        "실내먼지어때",
+        "방뭔지",
+        "방뭔지알려줘",
+        "방뭔지어때"
     )
 
     override fun process() {

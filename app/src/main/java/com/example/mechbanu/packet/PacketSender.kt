@@ -2,7 +2,6 @@ package com.example.mechbanu.packet
 
 import android.widget.Toast
 import com.example.mechbanu.bluetooth.BluetoothConnectService
-import com.example.mechbanu.speech.IClassificater
 import com.example.mechbanu.speech.classificater.*
 import java.lang.Exception
 
@@ -12,7 +11,11 @@ class PacketSender(val service: BluetoothConnectService) {
         Classificater_NowHum(),
         Classificater_NowDust(),
         Classificater_MoodLampOn(),
-        Classificater_MoodLampOff()
+        Classificater_MoodLampOff(),
+        Classificater_MoodLampBrightUp(),
+        Classificater_MoodLampBrightDown(),
+        Classificater_MoodLampTempUp(),
+        Classificater_MoodLampTempDown()
     )
 
     fun classificate(text: String) {
