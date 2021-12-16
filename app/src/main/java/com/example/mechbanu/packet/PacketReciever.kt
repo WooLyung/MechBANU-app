@@ -21,18 +21,13 @@ class PacketReciever(val service: BluetoothConnectService) {
         }
     }
 
-    private fun op_4(code: Int, data: ByteArray) {
+    private fun op_4(type: Int, data: ByteArray) {
         val value = ByteBuffer.wrap(data).getFloat()
-        val packet = DisplayUpdatePacket(5, 20)
-        packet.draw(DisplayEditor.getString(code, value), hashMapOf(
-            'a' to DisplayUpdatePacket.Pixel(255, 0, 0),
-            'b' to DisplayUpdatePacket.Pixel(255, 255, 0),
-            'c' to DisplayUpdatePacket.Pixel(0, 255, 0),
-            'd' to DisplayUpdatePacket.Pixel(0, 255, 255),
-            'e' to DisplayUpdatePacket.Pixel(0, 0, 255),
-            'f' to DisplayUpdatePacket.Pixel(255, 0, 255)
-        ))
-        sender?.sendPacket(packet)
+        when (type) {
+            0 -> DisplayEditor.sendTempPacket(value)
+            1 -> DisplayEditor.sendHumPacket(value)
+            2 -> DisplayEditor.sendDustPacket(value)
+        }
     }
 
     private fun op_5() {

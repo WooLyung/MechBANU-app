@@ -1,10 +1,69 @@
 package com.example.mechbanu.neopixel
 
 import android.util.Log
+import com.example.mechbanu.packet.instance.DisplayUpdatePacket
+import com.example.mechbanu.utils.sender
 import java.lang.Math.abs
 
 object DisplayEditor {
-    fun getString(type: Int, data: Float) : String {
+    fun sendTempPacket(data: Float) {
+        val packet = DisplayUpdatePacket(5, 20)
+        packet.draw(getString(0, data), hashMapOf(
+            'a' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'b' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'c' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'd' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'e' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'f' to DisplayUpdatePacket.Pixel(255, 255, 255)
+        ))
+        packet.setColorGradient(hashMapOf(
+            DisplayUpdatePacket.Pixel(255, 255, 255) to
+            DisplayUpdatePacket.Gradient(
+                173, 10, 33,
+                244, 61, 6)
+        ))
+        sender?.sendPacket(packet)
+    }
+
+    fun sendHumPacket(data: Float) {
+        val packet = DisplayUpdatePacket(5, 20)
+        packet.draw(getString(1, data), hashMapOf(
+            'a' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'b' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'c' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'd' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'e' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'f' to DisplayUpdatePacket.Pixel(255, 255, 255)
+        ))
+        packet.setColorGradient(hashMapOf(
+            DisplayUpdatePacket.Pixel(255, 255, 255) to
+                    DisplayUpdatePacket.Gradient(
+                        178, 235, 244,
+                        0, 84, 255)
+        ))
+        sender?.sendPacket(packet)
+    }
+
+    fun sendDustPacket(data: Float) {
+        val packet = DisplayUpdatePacket(5, 20)
+        packet.draw(getString(2, data), hashMapOf(
+            'a' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'b' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'c' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'd' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'e' to DisplayUpdatePacket.Pixel(255, 255, 255),
+            'f' to DisplayUpdatePacket.Pixel(255, 255, 255)
+        ))
+        packet.setColorGradient(hashMapOf(
+            DisplayUpdatePacket.Pixel(255, 255, 255) to
+                    DisplayUpdatePacket.Gradient(
+                        229, 216, 92,
+                        107, 153, 0)
+        ))
+        sender?.sendPacket(packet)
+    }
+
+    private fun getString(type: Int, data: Float) : String {
         val minus = data < 0
         val ten = (abs(data) * 10).toInt() / 100
         val one = (abs(data) * 10).toInt() / 10 % 10
