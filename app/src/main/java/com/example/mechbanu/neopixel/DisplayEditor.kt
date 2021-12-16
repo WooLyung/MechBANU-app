@@ -1,6 +1,5 @@
 package com.example.mechbanu.neopixel
 
-import android.util.Log
 import com.example.mechbanu.packet.instance.DisplayUpdatePacket
 import com.example.mechbanu.utils.sender
 import java.lang.Math.abs
