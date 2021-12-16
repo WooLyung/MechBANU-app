@@ -1,6 +1,6 @@
 package com.example.mechbanu.speech.classificater
 
-import com.example.mechbanu.MoodLampEditor
+import com.example.mechbanu.neopixel.MoodLampEditor
 import com.example.mechbanu.speech.IClassificater
 
 class Classificater_MoodLampOff : IClassificater {

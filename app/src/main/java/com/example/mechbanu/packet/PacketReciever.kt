@@ -2,6 +2,7 @@ package com.example.mechbanu.packet
 
 import android.util.Log
 import com.example.mechbanu.bluetooth.BluetoothConnectService
+import com.example.mechbanu.neopixel.DisplayEditor
 import com.example.mechbanu.packet.instance.DisplayUpdatePacket
 import com.example.mechbanu.utils.sender
 import java.nio.ByteBuffer
@@ -22,8 +23,16 @@ class PacketReciever(val service: BluetoothConnectService) {
 
     private fun op_4(code: Int, data: ByteArray) {
         val value = ByteBuffer.wrap(data).getFloat()
-
-        Log.i("BANUBANU", "${code} ${value} 데이터 읽어!")
+        val packet = DisplayUpdatePacket(5, 20)
+        packet.draw(DisplayEditor.getString(code, value), hashMapOf(
+            'a' to DisplayUpdatePacket.Pixel(255, 0, 0),
+            'b' to DisplayUpdatePacket.Pixel(255, 255, 0),
+            'c' to DisplayUpdatePacket.Pixel(0, 255, 0),
+            'd' to DisplayUpdatePacket.Pixel(0, 255, 255),
+            'e' to DisplayUpdatePacket.Pixel(0, 0, 255),
+            'f' to DisplayUpdatePacket.Pixel(255, 0, 255)
+        ))
+        sender?.sendPacket(packet)
     }
 
     private fun op_5() {
@@ -43,7 +52,6 @@ class PacketReciever(val service: BluetoothConnectService) {
         packet.setColorGradient(hashMapOf(
             DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(255, 178, 245, 107, 102, 255)
         ))
-
         sender?.sendPacket(packet)
     }
 }

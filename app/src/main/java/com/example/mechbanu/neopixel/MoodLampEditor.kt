@@ -1,8 +1,6 @@
-package com.example.mechbanu
+package com.example.mechbanu.neopixel
 
 import android.content.Context.MODE_PRIVATE
-import android.util.Log
-import com.example.mechbanu.packet.instance.DataRequestPacket
 import com.example.mechbanu.packet.instance.MoodLampPacket
 import com.example.mechbanu.utils.sender
 
