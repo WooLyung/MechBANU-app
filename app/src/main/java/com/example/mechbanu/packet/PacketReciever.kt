@@ -2,6 +2,8 @@ package com.example.mechbanu.packet
 
 import android.util.Log
 import com.example.mechbanu.bluetooth.BluetoothConnectService
+import com.example.mechbanu.packet.instance.DisplayUpdatePacket
+import com.example.mechbanu.utils.sender
 import java.nio.ByteBuffer
 
 class PacketReciever(val service: BluetoothConnectService) {
@@ -25,6 +27,23 @@ class PacketReciever(val service: BluetoothConnectService) {
     }
 
     private fun op_5() {
-        Log.i("BANUBANU", "쓰다듬기!")
+        val packet = DisplayUpdatePacket(3, 20)
+        packet.draw("" +
+                "........................" +
+                ".....1............1....." +
+                "......1..........1......" +
+                ".......1........1......." +
+                "........1......1........" +
+                ".......1........1......." +
+                "......1..........1......" +
+                ".....1............1.....", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 255)
+                )
+        )
+        packet.setColorGradient(hashMapOf(
+            DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(255, 178, 245, 107, 102, 255)
+        ))
+
+        sender?.sendPacket(packet)
     }
 }

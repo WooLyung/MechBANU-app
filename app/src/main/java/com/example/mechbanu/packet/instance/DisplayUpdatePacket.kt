@@ -12,6 +12,12 @@ class DisplayUpdatePacket(var duration: Int = 1, var brightness: Int = 20) : IPa
     }
 
     data class Pixel(var r: Int = 0, var g: Int = 0, var b: Int = 0)
+    data class Gradient(var r1: Int = 0, var g1: Int = 0, var b1: Int = 0, var r2 : Int = 0, var g2 : Int = 0, var b2: Int = 0) {
+        fun parse(i: Int) : Pixel {
+            val y = 7 - i % 8
+            return Pixel(r1 + (r2 - r1) * y / 7, g1 + (g2 - g1) * y / 7, b1 + (b2 - b1) * y / 7)
+        }
+    }
 
     val pixels: Array<Pixel> = (1..192).map { Pixel(0, 0, 0) }.toTypedArray()
 
@@ -49,6 +55,26 @@ class DisplayUpdatePacket(var duration: Int = 1, var brightness: Int = 20) : IPa
             else
                 pixels[offset] = Pixel(0, 0, 0)
         }
+    }
+
+    fun draw(string: String, map: HashMap<Char, Pixel>) {
+        for (i in 0..191) {
+            val x = i % 24
+            val y = i / 24
+            val offset = (7 - y) + x * 8
+
+            pixels[offset] = map.get(string[i]) ?: Pixel(0, 0, 0)
+        }
+    }
+
+    fun setColor(map: HashMap<Pixel, Pixel>) {
+        for (i in 0..191)
+            pixels[i] = map.get(pixels[i]) ?: pixels[i]
+    }
+
+    fun setColorGradient(map: HashMap<Pixel, Gradient>) {
+        for (i in 0..191)
+            pixels[i] = map.get(pixels[i])?.parse(i) ?: pixels[i]
     }
 
     fun setColor(r: Int, g: Int, b: Int) {
