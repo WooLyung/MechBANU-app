@@ -49,7 +49,9 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
                 matches.forEach { str ->
                     text += str
                 }
+                text = text.replace(" ", "")
 
+                Log.i("BANUBANU", text)
                 sender?.classificate(text)
             }
 

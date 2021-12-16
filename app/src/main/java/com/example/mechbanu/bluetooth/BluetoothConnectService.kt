@@ -106,7 +106,7 @@ class BluetoothConnectService : Service() {
                     }
                 }
 
-                Thread.sleep(10000)
+                Thread.sleep(5000)
             }
         }.start()
 

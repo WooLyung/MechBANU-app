@@ -6,9 +6,9 @@ import com.example.mechbanu.utils.sender
 
 class Classificater_NowTemp : IClassificater {
     override val speechs = arrayListOf(
-        "지금 온도",
-        "지금 온도 알려줘",
-        "지금 온도 어때"
+        "지금온도",
+        "지금온도알려줘",
+        "지금온도어때"
     )
 
     override fun process() {
