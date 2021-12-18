@@ -2,28 +2,28 @@ package com.example.mechbanu.packet
 
 import android.widget.Toast
 import com.example.mechbanu.bluetooth.BluetoothConnectService
-import com.example.mechbanu.speech.classificater.*
+import com.example.mechbanu.speech.classifier.*
 import java.lang.Exception
 
 class PacketSender(val service: BluetoothConnectService) {
     val clazz = arrayOf(
-        Classificater_NowTemp(),
-        Classificater_NowHum(),
-        Classificater_NowDust(),
-        Classificater_MoodLampOn(),
-        Classificater_MoodLampOff(),
-        Classificater_MoodLampBrightUp(),
-        Classificater_MoodLampBrightDown(),
-        Classificater_MoodLampTempUp(),
-        Classificater_MoodLampTempDown(),
-        Classificater_Smile(),
-        Classificater_Unknown()
+        Classifier_NowTemp(),
+        Classifier_NowHum(),
+        Classifier_NowDust(),
+        Classifier_MoodLampOn(),
+        Classifier_MoodLampOff(),
+        Classifier_MoodLampBrightUp(),
+        Classifier_MoodLampBrightDown(),
+        Classifier_MoodLampTempUp(),
+        Classifier_MoodLampTempDown(),
+        Classifier_Smile(),
+        Classifier_Unknown()
     )
 
     fun classificate(text: String) {
         try {
             clazz.forEach { inst ->
-                if (inst.classificate(text)) {
+                if (inst.classify(text)) {
                     inst.process()
                     return
                 }

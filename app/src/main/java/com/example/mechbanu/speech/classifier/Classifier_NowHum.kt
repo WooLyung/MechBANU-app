@@ -1,10 +1,10 @@
-package com.example.mechbanu.speech.classificater
+package com.example.mechbanu.speech.classifier
 
 import com.example.mechbanu.packet.instance.DataRequestPacket
-import com.example.mechbanu.speech.IClassificater
+import com.example.mechbanu.speech.IClassifier
 import com.example.mechbanu.utils.sender
 
-class Classificater_NowHum : IClassificater {
+class Classifier_NowHum : IClassifier {
     override val speechs = arrayListOf(
         "방습도",
         "방습도알려줘",

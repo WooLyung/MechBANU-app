@@ -1,9 +1,9 @@
-package com.example.mechbanu.speech.classificater
+package com.example.mechbanu.speech.classifier
 
 import com.example.mechbanu.neopixel.MoodLampEditor
-import com.example.mechbanu.speech.IClassificater
+import com.example.mechbanu.speech.IClassifier
 
-class Classificater_MoodLampBrightUp : IClassificater {
+class Classifier_MoodLampBrightUp : IClassifier {
     override val speechs = arrayListOf(
         "밝기올려",
         "밝기올려줘",

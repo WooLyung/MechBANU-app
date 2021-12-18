@@ -1,9 +1,9 @@
 package com.example.mechbanu.speech
 
-interface IClassificater {
+interface IClassifier {
     val speechs: List<String>
 
-    fun classificate(text: String) : Boolean {
+    fun classify(text: String) : Boolean {
         return text in speechs
     }
 
