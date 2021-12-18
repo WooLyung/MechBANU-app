@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.example.mechbanu.bluetooth.Bluetooth
 import com.example.mechbanu.bluetooth.BluetoothConnectService
 import com.example.mechbanu.speech.WrappedSpeechRecognizer
+import com.example.mechbanu.speech.classifier.Classifier_TodayHum
 import com.example.mechbanu.speech.classifier.Classifier_TodayTemp
 import java.lang.Exception
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
             }
             else {
-                Classifier_TodayTemp().process()
+                Classifier_TodayHum().process()
 
                 return@setOnClickListener
 
