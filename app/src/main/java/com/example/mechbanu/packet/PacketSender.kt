@@ -20,7 +20,8 @@ class PacketSender(val service: BluetoothConnectService) {
         Classifier_Unknown(),
         Classifier_TodayTemp(),
         Classifier_TodayHum(),
-        Classifier_TodayDust()
+        Classifier_TodayDust(),
+        Classifier_TodayWeather()
     )
 
     fun classificate(text: String) {

@@ -5,6 +5,35 @@ import com.example.mechbanu.utils.sender
 import java.lang.Math.abs
 
 object DisplayEditor {
+    fun sendWeatherPacket(weather: String?) {
+        val packet = DisplayUpdatePacket(5, 20)
+
+        when (weather) {
+            "Thunderstorm" -> { // 뇌우
+
+            }
+            "Drizzle" -> { // 이슬비
+
+            }
+            "Rain" -> { // 비
+
+            }
+            "Snow" -> { // 눈
+
+            }
+            "Clear" -> { // 맑음
+
+            }
+            "Clouds" -> { // 구름낌
+
+            }
+            else -> { // 안개
+
+            }
+        }
+        sender?.sendPacket(packet)
+    }
+
     fun sendTempPacket(data: Float) {
         val packet = DisplayUpdatePacket(5, 20)
         packet.draw(getString(0, data), hashMapOf(
