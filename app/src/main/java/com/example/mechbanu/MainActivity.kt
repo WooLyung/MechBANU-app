@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.example.mechbanu.bluetooth.Bluetooth
 import com.example.mechbanu.bluetooth.BluetoothConnectService
 import com.example.mechbanu.speech.WrappedSpeechRecognizer
+import com.example.mechbanu.speech.classifier.Classifier_TodayTemp
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
             }
             else {
+                Classifier_TodayTemp().process()
+
+                return@setOnClickListener
+
                 if (BluetoothConnectService.instance == null) {
                     Toast.makeText(this, "메카 반우가 준비되지 않았어요.", Toast.LENGTH_SHORT).show()
                 }
