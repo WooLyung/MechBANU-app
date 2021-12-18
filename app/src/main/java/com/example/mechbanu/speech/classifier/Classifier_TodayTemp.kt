@@ -44,7 +44,6 @@ class Classifier_TodayTemp : IClassifier {
 
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
-            conn.doOutput = true
             conn.doInput = true
 
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {
