@@ -29,7 +29,10 @@ class Classifier_TodayWeather : IClassifier {
         "실외날씨어때",
         "날씨",
         "날씨알려줘",
-        "날씨어때"
+        "날씨어때",
+        "지금날씨",
+        "지금날씨알려줘",
+        "지금날씨어때"
     )
 
     override fun process() {

@@ -1,5 +1,6 @@
 package com.example.mechbanu.packet
 
+import android.util.Log
 import android.widget.Toast
 import com.example.mechbanu.bluetooth.BluetoothConnectService
 import com.example.mechbanu.speech.classifier.*
@@ -17,14 +18,14 @@ class PacketSender(val service: BluetoothConnectService) {
         Classifier_MoodLampTempUp(),
         Classifier_MoodLampTempDown(),
         Classifier_Smile(),
-        Classifier_Unknown(),
         Classifier_TodayTemp(),
         Classifier_TodayHum(),
         Classifier_TodayDust(),
-        Classifier_TodayWeather()
+        Classifier_TodayWeather(),
+        Classifier_Unknown()
     )
 
-    fun classificate(text: String) {
+    fun classify(text: String) {
         try {
             clazz.forEach { inst ->
                 if (inst.classify(text)) {

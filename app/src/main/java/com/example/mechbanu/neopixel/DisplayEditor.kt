@@ -1,5 +1,6 @@
 package com.example.mechbanu.neopixel
 
+import android.util.Log
 import com.example.mechbanu.packet.instance.DisplayUpdatePacket
 import com.example.mechbanu.utils.sender
 import java.lang.Math.abs
@@ -10,25 +11,157 @@ object DisplayEditor {
 
         when (weather) {
             "Thunderstorm" -> { // 뇌우
-
+                packet.draw("" +
+                        ".........1111.111......." +
+                        "........111111111......." +
+                        "........1111111111......" +
+                        ".........12111111......." +
+                        "...........2..2........." +
+                        "..........2..2.........." +
+                        "...........2..2........." +
+                        ".............2..........", hashMapOf(
+                            '1' to DisplayUpdatePacket.Pixel(255, 255, 255),
+                            '2' to DisplayUpdatePacket.Pixel(255, 255, 0)
+                        )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(
+                        100, 100, 100,
+                        0, 0, 0),
+                    DisplayUpdatePacket.Pixel(255, 255, 0) to DisplayUpdatePacket.Gradient(
+                        255, 255, 0,
+                        255, 100, 0)
+                ))
             }
             "Drizzle" -> { // 이슬비
-
+                packet.draw("" +
+                        ".........1111.111......." +
+                        "........111111111......." +
+                        "........1111111111......" +
+                        ".........11111111......." +
+                        "..........2.2...2......." +
+                        "..............2........." +
+                        "...........2............" +
+                        "...............2........", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 255),
+                    '2' to DisplayUpdatePacket.Pixel(0, 0, 255)
+                )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(
+                        200, 200, 200,
+                        100, 100, 100),
+                    DisplayUpdatePacket.Pixel(0, 0, 255) to DisplayUpdatePacket.Gradient(
+                        0, 216, 255,
+                        0, 84, 255)
+                ))
             }
             "Rain" -> { // 비
-
+                packet.draw("" +
+                        ".........1111.111......." +
+                        "........111111111......." +
+                        "........1111111111......" +
+                        ".........11121111......." +
+                        "..........2.2...2......." +
+                        "..........2...2.2......." +
+                        "............2.2........." +
+                        "............2...........", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 255),
+                    '2' to DisplayUpdatePacket.Pixel(0, 0, 255)
+                )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(
+                        150, 150, 150,
+                        50, 50, 50),
+                    DisplayUpdatePacket.Pixel(0, 0, 255) to DisplayUpdatePacket.Gradient(
+                        0, 150, 255,
+                        0, 54, 255)
+                ))
             }
             "Snow" -> { // 눈
-
+                packet.draw("" +
+                        ".........1111.111......." +
+                        "........111111111......." +
+                        "........1111111111......" +
+                        ".........11111111......." +
+                        "..........2.2...2......." +
+                        "..............2........." +
+                        "...........2............" +
+                        ".........2.....2........", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 255),
+                    '2' to DisplayUpdatePacket.Pixel(0, 0, 255)
+                )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(
+                        100, 100, 100,
+                        50, 50, 50),
+                    DisplayUpdatePacket.Pixel(0, 0, 255) to DisplayUpdatePacket.Gradient(
+                        255, 255, 255,
+                        255, 255, 255)
+                ))
             }
             "Clear" -> { // 맑음
-
+                packet.draw("" +
+                        "...........22..........." +
+                        ".........221122........." +
+                        ".........211112........." +
+                        "........21111112........" +
+                        "........21111112........" +
+                        ".........211112........." +
+                        ".........221122........." +
+                        "...........22...........", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 0),
+                    '2' to DisplayUpdatePacket.Pixel(255, 0, 0)
+                )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 0) to DisplayUpdatePacket.Gradient(
+                        255, 255, 0,
+                        255, 187, 0),
+                    DisplayUpdatePacket.Pixel(255, 0, 0) to DisplayUpdatePacket.Gradient(
+                        255, 94, 0,
+                        152, 0, 0)
+                ))
             }
             "Clouds" -> { // 구름낌
-
+                packet.draw("" +
+                        "........................" +
+                        "........................" +
+                        ".........1111.111......." +
+                        "........111111111......." +
+                        "........1111111111......" +
+                        ".........11111111......." +
+                        "........................" +
+                        "........................", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 255)
+                )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(
+                        100, 100, 100,
+                        50, 50, 50)
+                ))
             }
             else -> { // 안개
-
+                packet.draw("" +
+                        "........................" +
+                        "...........111.........." +
+                        ".......11.....1111......" +
+                        ".........111............." +
+                        ".....111......1111......" +
+                        ".........1111..........." +
+                        "........................" +
+                        "........................", hashMapOf(
+                    '1' to DisplayUpdatePacket.Pixel(255, 255, 255)
+                )
+                )
+                packet.setColorGradient(hashMapOf(
+                    DisplayUpdatePacket.Pixel(255, 255, 255) to DisplayUpdatePacket.Gradient(
+                        100, 100, 100,
+                        50, 50, 50)
+                ))
             }
         }
         sender?.sendPacket(packet)

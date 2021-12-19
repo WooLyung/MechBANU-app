@@ -8,10 +8,7 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
 import android.widget.Toast
-import com.example.mechbanu.bluetooth.BluetoothConnectService
-import com.example.mechbanu.packet.instance.DisplayUpdatePacket
 import com.example.mechbanu.utils.sender
-import java.lang.Exception
 
 class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = null) {
     var sttIntent: Intent? = null
@@ -52,7 +49,7 @@ class WrappedSpeechRecognizer(context: Context, var listener: (() -> Unit)? = nu
                 text = text.replace(" ", "")
 
                 Log.i("BANUBANU", text)
-                sender?.classificate(text)
+                sender?.classify(text)
             }
 
             override fun onPartialResults(p0: Bundle?) = Unit
