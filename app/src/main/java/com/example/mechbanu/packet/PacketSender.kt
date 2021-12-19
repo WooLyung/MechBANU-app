@@ -22,6 +22,8 @@ class PacketSender(val service: BluetoothConnectService) {
         Classifier_TodayHum(),
         Classifier_TodayDust(),
         Classifier_TodayWeather(),
+        Classifier_Mint(),
+        Classifier_RCP(),
         Classifier_Unknown()
     )
 
